@@ -1,0 +1,86 @@
+[gd_scene load_steps=11 format=3 uid="uid://dnq1ha2qmieuf"]
+
+[ext_resource type="PackedScene" uid="uid://d7denlk6pmkn" path="res://dialogue_area.tscn" id="1_42lmi"]
+[ext_resource type="PackedScene" uid="uid://toyub3necoa1" path="res://dialogue_line.tscn" id="2_u7lt6"]
+[ext_resource type="PackedScene" uid="uid://b3c1u8pbkagou" path="res://dialogue_panel.tscn" id="3_a43js"]
+[ext_resource type="Script" uid="uid://ec5qsp4ypcjr" path="res://player.gd" id="4_2a1il"]
+[ext_resource type="Texture2D" uid="uid://bvlwk5lh83bwc" path="res://icon.svg" id="4_f7hpd"]
+[ext_resource type="Texture2D" uid="uid://bard4w1cn0hjn" path="res://icon2.svg" id="4_sg5kq"]
+[ext_resource type="Texture2D" uid="uid://cc806jl5k4g5e" path="res://icon3.svg" id="7_mbc7b"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nq3y2"]
+radius = 169.012
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2a1il"]
+size = Vector2(117, 120)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2a1il"]
+radius = 69.029
+
+[node name="dialogue_example" type="Node"]
+
+[node name="dialogue_panel" parent="." instance=ExtResource("3_a43js")]
+visible = false
+
+[node name="npc" type="Sprite2D" parent="."]
+position = Vector2(760, 82)
+texture = ExtResource("4_sg5kq")
+
+[node name="dialogue_area" parent="npc" instance=ExtResource("1_42lmi")]
+position = Vector2(1.45519e-11, 1.45519e-11)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="npc/dialogue_area"]
+shape = SubResource("CircleShape2D_nq3y2")
+metadata/_edit_lock_ = true
+
+[node name="dialogue_line" parent="npc/dialogue_area" instance=ExtResource("2_u7lt6")]
+char_name = "Vôdot:"
+text = "dialogo 1"
+picture = ExtResource("4_sg5kq")
+
+[node name="dialogue_line" parent="npc/dialogue_area/dialogue_line" instance=ExtResource("2_u7lt6")]
+char_name = "Godot [não muito feliz]:"
+text = "opção 1"
+picture = ExtResource("7_mbc7b")
+
+[node name="dialogue_line" parent="npc/dialogue_area/dialogue_line/dialogue_line" instance=ExtResource("2_u7lt6")]
+char_name = "Vôdot:"
+text = "texto 2"
+picture = ExtResource("4_sg5kq")
+
+[node name="dialogue_line2" parent="npc/dialogue_area/dialogue_line" instance=ExtResource("2_u7lt6")]
+char_name = "Godot:"
+text = "opção 2"
+picture = ExtResource("4_f7hpd")
+
+[node name="dialogue_line" parent="npc/dialogue_area/dialogue_line/dialogue_line2" instance=ExtResource("2_u7lt6")]
+char_name = "Vôdot:"
+text = "Outro texto"
+picture = ExtResource("4_sg5kq")
+
+[node name="dialogue_line" parent="npc/dialogue_area/dialogue_line/dialogue_line2/dialogue_line" instance=ExtResource("2_u7lt6")]
+char_name = "Godot:"
+text = "Mais um texto"
+picture = ExtResource("4_f7hpd")
+
+[node name="player" type="CharacterBody2D" parent="."]
+position = Vector2(202, 278)
+script = ExtResource("4_2a1il")
+
+[node name="Sprite2D" type="Sprite2D" parent="player"]
+texture = ExtResource("4_f7hpd")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
+position = Vector2(-0.5, 1)
+shape = SubResource("RectangleShape2D_2a1il")
+metadata/_edit_lock_ = true
+
+[node name="Area2D" type="Area2D" parent="player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player/Area2D"]
+shape = SubResource("CircleShape2D_2a1il")
+debug_color = Color(0.67144, 0.7, 0.078749, 0.42)
+
+[connection signal="area_entered" from="player/Area2D" to="player" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="player/Area2D" to="player" method="_on_area_2d_area_exited"]

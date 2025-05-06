@@ -22,18 +22,9 @@ func _physics_process(delta):
 				$"../dialogue_panel".visible=true
 				$"../dialogue_panel".set_lines(dialog_area.get_next_lines(0))
 	elif state=="dialog":
-		if Input.is_action_just_pressed("ui_up"):
-			$"../dialogue_panel".select_previous()
-		if Input.is_action_just_pressed("ui_down"):
-			$"../dialogue_panel".select_next()
-		if Input.is_action_just_pressed("ui_accept"):
-			var lines=dialog_area.get_next_lines($"../dialogue_panel".idx_selected)
-			if len(lines)>0:
-				$"../dialogue_panel".set_lines(lines)
-			else:
-				dialog_area.reset_lines()
-				$"../dialogue_panel".visible=false
-				state="walking"
+		var res=$"../dialogue_panel".process_dialogue("ui_up","ui_down","ui_accept",dialog_area)
+		if res==false:
+			state="walking"
 	
 
 

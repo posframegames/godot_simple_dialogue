@@ -9,11 +9,11 @@ var t=0.0
 @onready var items_vbox = $hbox/margin_items/vbox/vbox
 
 func process_dialogue(action_up,action_down,action_ok,dialogue_area):
-	if Input.is_action_just_pressed("ui_up"):
+	if Input.is_action_just_pressed(action_up):
 		select_previous()
-	if Input.is_action_just_pressed("ui_down"):
+	if Input.is_action_just_pressed(action_down):
 		select_next()	
-	if Input.is_action_just_pressed("acao"):
+	if Input.is_action_just_pressed(action_ok):
 		var lines=dialogue_area.get_next_lines(idx_selected)		
 		if len(lines)==0:
 			visible=false

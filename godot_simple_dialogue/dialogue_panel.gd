@@ -8,6 +8,25 @@ var idx_selected=0
 var t=0.0
 @onready var items_vbox = $hbox/margin_items/vbox/vbox
 
+func process_dialogue(action_up,action_down,action_ok,dialogue_area):
+	if Input.is_action_just_pressed("ui_up"):
+		select_previous()
+	if Input.is_action_just_pressed("ui_down"):
+		select_next()	
+	if Input.is_action_just_pressed("acao"):
+		var lines=dialogue_area.get_next_lines(idx_selected)		
+		if len(lines)==0:
+			visible=false
+			return false
+		else:
+			set_lines(lines)
+			visible=true
+			return true
+	visible=true
+	return true;
+		
+
+
 func set_lines(lines):
 	for item in items_vbox.get_children():
 		item.queue_free()
